@@ -40,13 +40,21 @@ http://weka.sourceforge.net/doc.stable/weka/filters/unsupervised/instance/Resamp
 # Step 4
 
 Reduced data set into two sizes - 10% and 20%.
+
 100% results in 58.7% (training set) - no filters
+
 10% resample results in 56% (training set) - Filter Descritze
+
 20% resample results in 57.5% (training set) - Filter Descritze
+
 20% resample results in 55.6% (training set) - no filters
+
 20% resample results in 55.5% (training set) - no filters
-20% resample results in 57.5% (training set) - Filter Standerdize
+
+20% resample results in 57.5% (training set) - Filter Standardize
+
 20% resample results in 57.5% (training set) - Filter Normalize
+
 20% resample results in 30.6% (training set = 10% resample) - Filter Descritze
 
 Turn these results into a table and save models
