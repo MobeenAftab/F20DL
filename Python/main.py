@@ -67,8 +67,24 @@ def printTTS():
 # printTTS()
 
 '''
-    Step 2: Build KNN model, k=3
+    Step 2:
+        - Select best features only
+        - Build KNN model, k=3
 '''
+
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import SelectPercentile
+from sklearn.feature_selection import SelectKBest
+
+# select = SelectPercentile(percentile=20)
+select = SelectKBest(k = 10)
+select.fit(x_train, y_train)
+x_train_selected = select.transform(x_train)
+
+print(x_train_selected.shape)
+print(format(x_train_selected.shape))
+print(select.get_support())
 
 knn = KNeighborsClassifier(n_neighbors = 3)
 knn.fit(x_train, y_train)
@@ -76,4 +92,7 @@ y_pred = knn.predict(x_test)
 print("KNeighborsClassifier\t k=3:\n", y_pred)
 
 accuracy = metrics.accuracy_score(y_test, y_pred)
+score = knn.score(x_test, y_test)
 print("Accuracy:\t", accuracy) # 0.34407044137316095
+print("Score:\t", score) #
+
