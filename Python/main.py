@@ -27,7 +27,7 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.model_selection import train_test_split
 
 
-data = pd.read_csv('../data/fer2018-converted.csv', header=None, index_col = False)
+data = pd.read_csv('../data/converted/fer2018.csv', header=None, index_col = False)
 
 index = data.index
 columns = data.columns
