@@ -71,8 +71,12 @@ printDF()
     Splitting x and y into training and testing sets
 '''
 
+# Change this to 0 if doing selectKBest on whole dataset
+# and want to keep the shuffling functionality of data
+test_size = 0.25
+
 # default split is 0.75 for training and 0.25 for testing
-x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=1, shuffle=True)
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=1, shuffle=True, test_size=test_size)
 
 
 def printTTS():
