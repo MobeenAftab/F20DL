@@ -13,7 +13,7 @@ with open(file_path, 'r') as fp:
             fp2.write(lineWithCommas)
             line = fp.readline()
             num = num+1
-            if num % 10 == 0:
+            if num % 100 == 0:
                 print("Working on line", num)
 
 

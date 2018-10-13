@@ -23,11 +23,14 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectPercentile
 from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
 
 from sklearn.model_selection import train_test_split
 
+input_file_path = '../data/converted/fer2018angry.csv'
 
-data = pd.read_csv('../data/converted/fer2018.csv', header=None, index_col = False)
+print("Reading in and converting", input_file_path)
+data = pd.read_csv(input_file_path, header=None, index_col=False)
 
 index = data.index
 columns = data.columns
@@ -35,15 +38,19 @@ values = data.values
 
 
 # create a list of features
-feature_cols = columns
+feature_cols = columns[1::]
 # use the list to select a subset of the original dataframe
 x = data[feature_cols]
 # print the first 5 rows
 # print(x.head(), "\n", x.shape)
 
-# select first column in array
-y = data.iloc[:,0]
+# select first column in array (AND OVERRIDE THE CLASS ATTRIBUTE DATA TYPE)
+y = data.iloc[:,0].astype('bool')
+# y = data.iloc[:,0].astype('category')
+
+
 # print(y.head(), "\n", y.shape)
+
 
 def printDF():
     '''
@@ -54,6 +61,8 @@ def printDF():
     print("index:\n", index)
     print("columns:\n", columns)
     print("values:\n", values)
+    print("x.head\n", x.head())
+    print("y.head\n", y.head())
 
 
 printDF()
@@ -95,14 +104,37 @@ def train_KNearestNeighbour(attributes, class_atr):
     return knn
 
 
-knn = train_KNearestNeighbour(x_train, y_train)
+# knn = train_KNearestNeighbour(x_train, y_train)
+#
+# print("Testing on", x_test.shape[0], "instances")
+# score = knn.score(x_test, y_test)
+# print("Score:\t", score)
 
-print("Testing on", x_test.shape[0], "instances")
-score = knn.score(x_test, y_test)
-print("Score:\t", score)
 
-print("END PROGRAM")
 
+'''
+    Selecting K best attributes based on a Univariate feature selection
+    top 2, 5, and 10.
+    
+'''
+
+
+def selectKBest(k):
+
+    print("Selecting", k, "Best")
+    selector = SelectKBest(chi2, k=k).fit(x_train, y_train)
+    # selected_x = selector.transform(x_train)
+    # print("select scores\n", selector.scores_)
+    # print("select pvalues\n", selector.pvalues_)
+
+    idxs_selected = selector.get_support(indices=True)
+    print("------", k, " best attribute indices are: ", idxs_selected, "-------")
+
+# https://stackoverflow.com/questions/39839112/the-easiest-way-for-getting-feature-names-after-running-selectkbest-in-scikit-le
+
+selectKBest(2)
+selectKBest(5)
+selectKBest(10)
 # select = SelectPercentile(percentile=20)
 # select = SelectKBest(k = 10)
 # select.fit(x_train, y_train)
@@ -123,4 +155,4 @@ print("END PROGRAM")
 # print("KNeighborsClassifier\t k=3:\n", y_pred)
 
 
-
+print("END PROGRAM")
