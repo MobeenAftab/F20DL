@@ -14,82 +14,104 @@
         http://scikit-learn.org/stable/modules/feature_selection.html#univariate-feature-selection
 '''
 
+'''
+    Libraries being used
+'''
 import pandas as pd
-import matplotlib
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn import metrics
-
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.feature_selection import SelectPercentile
+import matplotlib.pyplot as plt
+
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
-
 from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
 
-input_file_path = '../data/converted/fer2018angry.csv'
+'''
+    Global variables
+        - Saving file path of each emotion dataset
+'''
 
+fer2018 = '../data/converted/fer2018.csv'
+fer2018angry = '../data/converted/fer2018angry.csv'
+fer2018disgust = '../data/converted/fer2018disgust.csv'
+fer2018fear = '../data/converted/fer2018fear.csv'
+fer2018happy = '../data/converted/fer2018happy.csv'
+fer2018netural = '../data/converted/fer2018netural.csv'
+fer2018sad = '../data/converted/fer2018sad.csv'
+fer2018surprise = '../data/converted/fer2018surprise.csv'
+
+# Set dataset and file path here
+input_file_path = fer2018
+
+# Create data frame from dataset
 print("Reading in and converting", input_file_path)
-data = pd.read_csv(input_file_path, header=None, index_col=False)
+data = pd.read_csv(input_file_path, header=None, index_col = False)
 
+# Extract specific properties from data frame
 index = data.index
 columns = data.columns
 values = data.values
 
-
-# create a list of features
+# Create a list of features
 feature_cols = columns[1::]
-# use the list to select a subset of the original dataframe
-x = data[feature_cols]
-# print the first 5 rows
-# print(x.head(), "\n", x.shape)
 
-# select first column in array (AND OVERRIDE THE CLASS ATTRIBUTE DATA TYPE)
+x = data[feature_cols]
+
+# Select first column in array (AND OVERRIDE THE CLASS ATTRIBUTE DATA TYPE)
 y = data.iloc[:,0].astype('bool')
 # y = data.iloc[:,0].astype('category')
 
-
-# print(y.head(), "\n", y.shape)
-
-
-def printDF():
+def printDataFrameMatrix():
     '''
-        Return information about dataframe
+        print information about dataframe
     '''
-    print(data.head())      
-    print(data.shape)
-    print("index:\n", index)
-    print("columns:\n", columns)
-    print("values:\n", values)
-    print("x.head\n", x.head())
-    print("y.head\n", y.head())
+    print('****Printing data frame properties****\n')
+    print('Data haed:\n', data.head(), "\n")      
+    print('Data Shape:\n', data.shape, "\n")
+    print('x Head:\n', x.head(), "\n")
+    print('x Shape:\n', x.shape, "\n")
+    print('y Shape:\n', y.head(), "\n")
+    print('y Shape:\n', y.shape, "\n")
+    print('index:\n', index, "\n")
+    print('columns:\n', columns, "\n")
+    print('values:\n', values, "\n")
+    print('****Printing data frame properties end****\n\n')
 
-
-printDF()
 
 '''
-    Splitting x and y into training and testing sets
+    splitting x and y into training and testing sets
+
+    parameters
+        test_size:
+            default split is 0.75 for training and 0.25 for testing
+            set this to 0 when doing selectKBest on whole dataset
+
+        shuffle: randomly shuffle data frame
 '''
+
+def printTTS():
+    '''
+        Print out training test split shape
+    '''
+    print(
+        "x_train:\t", x_train.shape, "\n",
+        "y_train:\t", y_train.shape, "\n",
+        "x_test:\t", x_test.shape, "\n",
+        "y_test:\t", y_test.shape, "\n"
+        )
 
 # Change this to 0 if doing selectKBest on whole dataset
 # and want to keep the shuffling functionality of data
 test_size = 0.25
 
-# default split is 0.75 for training and 0.25 for testing
 x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=1, shuffle=True, test_size=test_size)
 
-
-def printTTS():
-    print(
-        "x_train:", x_train.shape, "\n",
-        "y_train:", y_train.shape, "\n"
-        "x_test:", x_test.shape, "\n"
-        "y_test:", y_test.shape, "\n"
-        )
-
-
-printTTS()
-
+# printTTS()
 
 
 '''
@@ -99,7 +121,16 @@ printTTS()
 
 
 def train_KNearestNeighbour(attributes, class_atr):
+    """
+        Build and return a KNN model
 
+        Parameters
+
+        attributes: training set of the attributres of the instance class
+
+        class_atr: training set of the the class itribute to predict
+
+    """
     n_neighbours = 3
     print("Training KNN Model with n = ", n_neighbours)
     knn = KNeighborsClassifier(n_neighbors=3)
@@ -107,56 +138,135 @@ def train_KNearestNeighbour(attributes, class_atr):
 
     return knn
 
+def modelResults(knn, x_test_selected): 
+    """
+        Evaluate the KNN for selectKBest and print the results
 
-# knn = train_KNearestNeighbour(x_train, y_train)
-#
-# print("Testing on", x_test.shape[0], "instances")
-# score = knn.score(x_test, y_test)
-# print("Score:\t", score)
+        Warning will be trwon if training and test set are not the same dimention or size
 
+        Print the following:
+            Confusion matrix
+            Classification report
+            roc_curve and roc_auc_score
+            Accuracy
 
+        Parameters
 
-'''
-    Selecting K best attributes based on a Univariate feature selection
-    top 2, 5, and 10.
+            knn: a trained KNN model
+
+            x_test_selected: array from selectKBest
+    """
+    print("Testing on", x_test_selected.shape[0], "instances\n")
+    score = knn.score(x_test_selected, y_test)
+    y_pred = knn.predict(x_test_selected)
     
-'''
+    print("confusion_matrix:\n", confusion_matrix(y_test, y_pred), '\n')
+    print("classification_report:\n", classification_report(y_test, y_pred), '\n')
+
+    print(pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'], margins=True))
+
+    y_pred_proba = knn.predict_proba(x_test_selected)[:,1]
+    fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)
+
+    plt.plot([0,1],[0,1],'k--')
+    plt.plot(fpr,tpr, label='Knn')
+    plt.xlabel('fpr')
+    plt.ylabel('tpr')
+    plt.title('Knn(n_neighbors=3) ROC curve')
+    plt.show()
+    print('roc accuracy score:\t', roc_auc_score(y_test,y_pred_proba), '\n')
+
+    
+    print("KNN Accuracy:\t", score, '\n')
 
 
 def selectKBest(k):
+    """
+        Evaluate association links between class and attribute selection.
 
+        algorith is ran on both the training and test sets or else there will be an error when values are
+            passed to trainAndEvaluateKNNSelectKBest().
+
+        call trainAndEvaluateKNNSelectKBest(x_train_selected, x_test_selected) with both the new training and test sets for evaluation
+
+        parameters:
+            k: Number of best attributes to select and train
+
+    """
     print("Selecting", k, "Best")
     selector = SelectKBest(chi2, k=k).fit(x_train, y_train)
-    # selected_x = selector.transform(x_train)
-    # print("select scores\n", selector.scores_)
-    # print("select pvalues\n", selector.pvalues_)
+    x_train_selected = selector.transform(x_train)
+    x_test_selected = selector.transform(x_test)
 
+    # printSelectKBest(k, selector, x_train_selected, x_test_selected)
+
+    trainAndEvaluateKNNSelectKBest(x_train_selected, x_test_selected)
+
+def printSelectKBest(k, selector, x_train_selected, x_test_selected):
+    """
+        print properties of the selectKBest(k)
+
+        parameters:
+            k = k best to chose
+
+            selector: model of trained selector 
+
+            x_train_selected: array of k best attributes from training set
+
+            x_test_selected: array of k best attributes from test set
+    """
+    # print selector model results
     idxs_selected = selector.get_support(indices=True)
     print("------", k, " best attribute indices are: ", idxs_selected, "-------")
+    print("select scores\n", selector.scores_)
+    print("select pvalues\n", selector.pvalues_)
 
-# https://stackoverflow.com/questions/39839112/the-easiest-way-for-getting-feature-names-after-running-selectkbest-in-scikit-le
+    # print x_train_selected properties
+    print('x_train_selected Shape:\n', x_train_selected.shape, '\n')
+    print(format(x_train_selected.shape), '\n')
 
-selectKBest(2)
-selectKBest(5)
-selectKBest(10)
-# select = SelectPercentile(percentile=20)
-# select = SelectKBest(k = 10)
-# select.fit(x_train, y_train)
-# x_train_selected = select.transform(x_train)
+    # print x_test_selected properties
+    print('x_test_selected Shape:\n', x_test_selected.shape, '\n')
+    print(format(x_train_selected.shape), '\n')
 
-# print(x_train_selected.shape)
-# print(format(x_train_selected.shape))
-# print(select.get_support())
+def trainAndEvaluateKNN():
+    """
+        auxiliary function to call train_KNearestNeighbour() on full dataset
+        takes no parameters and evaluates the currently loaded test set
+    """
+    print('***Begin training KNN***')
+    knn = train_KNearestNeighbour(x_train, y_train)
+    print('***Begin evaluating KNN***')
+    modelResults(knn, x_test)
+    print("END PROGRAM\n\n")
 
-# testselect = SelectKBest(k = 10)
-# x_test_selected = select.transform(x_test)
+def trainAndEvaluateKNNSelectKBest(x_train_selected, x_test_selected):
+    """
+        auxiliary function to call train_KNearestNeighbour(x_train_selected, y_train) on full selectKBest attributes
+        
+        x
+        parameters:
+
+            x_train_selected: array of selectKBest attributes from training set 
+
+            x_test_selected:
+                array of selectKBest attributes from test set
+                variable is only used to pass test set into modelResults() for evaluation           
+
+    """
+    print('\t***Begin training KNN SelectKBest***\n')
+    knn = train_KNearestNeighbour(x_train_selected, y_train)
+    print('\t***Begin evaluating KNN***\n')
+    modelResults(knn, x_test_selected)
+    print('END PROGRAM\n\n')
+
+def main():
+    #trainAndEvaluateKNN()
+
+    two = selectKBest(2)
+    five = selectKBest(5)
+    ten = selectKBest(10)
 
 
+main()
 
-# These 3 lines do the same as knn.score(x_test, y_test)
-# y_pred = knn.predict(x_test)
-# accuracy = metrics.accuracy_score(y_test, y_pred)
-# print("KNeighborsClassifier\t k=3:\n", y_pred)
-
-
-print("END PROGRAM")
