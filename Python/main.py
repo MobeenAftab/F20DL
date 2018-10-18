@@ -52,6 +52,11 @@ input_file_path = fer2018
 print("Reading in and converting", input_file_path)
 data = pd.read_csv(input_file_path, header=None, index_col = False)
 
+# Remove duplicate rows
+print(data.shape)
+data = data.drop_duplicates(keep=False)
+print(data.shape)
+
 # Extract specific properties from data frame
 index = data.index
 columns = data.columns
@@ -63,8 +68,8 @@ feature_cols = columns[1::]
 x = data[feature_cols]
 
 # Select first column in array (AND OVERRIDE THE CLASS ATTRIBUTE DATA TYPE)
-y = data.iloc[:,0].astype('bool')
-# y = data.iloc[:,0].astype('category')
+# y = data.iloc[:,0].astype('bool')
+y = data.iloc[:,0].astype('category')
 
 def printDataFrameMatrix():
     '''

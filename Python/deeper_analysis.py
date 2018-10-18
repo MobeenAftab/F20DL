@@ -48,7 +48,7 @@ fer2018angry = '../data/converted/fer2018angry.csv'
 fer2018disgust = '../data/converted/fer2018disgust.csv'
 fer2018fear = '../data/converted/fer2018fear.csv'
 fer2018happy = '../data/converted/fer2018happy.csv'
-fer2018netural = '../data/converted/fer2018netural.csv'
+fer2018neutral = '../data/converted/fer2018neutral.csv'
 fer2018sad = '../data/converted/fer2018sad.csv'
 fer2018surprise = '../data/converted/fer2018surprise.csv'
 
@@ -58,6 +58,11 @@ input_file_path = fer2018
 # Create data frame from dataset
 print("Reading in and converting", input_file_path)
 data = pd.read_csv(input_file_path, header=None, index_col=False)
+
+# Remove duplicate rows
+print(data.shape)
+data = data.drop_duplicates(keep=False)
+print(data.shape)
 
 # Extract specific properties from data frame
 index = data.index
@@ -79,6 +84,7 @@ top10_attrs_chi2 = [1313,1361,1362,1408,1409,1422,1608,1652,1655,1656,17,18,23,2
 '''
 uncomment based on what you need to test!
 '''
+# x = data[feature_cols]
 # x = data[top2_attrs_chi2]
 # x = data[top5_attrs_chi2]
 x = data[top10_attrs_chi2]
@@ -183,7 +189,14 @@ def modelResults(knn, x_test_selected):
     """
     print("Testing on", x_test_selected.shape[0], "instances\n")
     score = knn.score(x_test_selected, y_test)
-    # y_pred = knn.predict(x_test_selected)
+    y_pred = knn.predict_proba(x_test_selected)
+    probs = pd.DataFrame(y_pred)
+    print("all probabilities:\n", probs, "\n")
+    for c in range(7):
+        likely = probs[probs[c] > 0.5]
+        print ("class" + str(c) + " probability > 0.5:\n", likely)
+        print ("indexes of likely class" + str(c) + ":", likely.index.tolist(), "\n")
+
     #
     # print("confusion_matrix:\n", confusion_matrix(y_test, y_pred), '\n')
     # print("classification_report:\n", classification_report(y_test, y_pred), '\n')
@@ -202,6 +215,8 @@ def modelResults(knn, x_test_selected):
     # print('roc accuracy score:\t', roc_auc_score(y_test, y_pred_proba), '\n')
 
     print("KNN Accuracy:\t", score, '\n')
+    print("y_pred: \t", y_pred)
+
 
 
 def selectKBest(k):
