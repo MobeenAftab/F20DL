@@ -1,0 +1,285 @@
+=== Run information ===
+
+Scheme:       weka.clusterers.MakeDensityBasedClusterer -M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -init 0 -max-candidates 100 -periodic-pruning 10000 -min-density 2.0 -t1 -1.25 -t2 -1.0 -N 2 -A "weka.core.EuclideanDistance -R first-last" -I 500 -num-slots 1 -S 10
+Relation:     fer2018-weka.filters.unsupervised.instance.Resample-S42-Z30.0-no-replacement-weka.filters.unsupervised.attribute.Remove-R2-11,16-29,33-59,63-76,81-149,151-174,176-197,199-245,247-271,274-551,555-599,603-623,625-647,651-696,698-721,724-745,747-769,772-792,794-818,820-865,867-1360,1365-1374,1377-1407,1411-1422,1425-1456,1459-1504,1506-1513,1516-1561,1564-1721,1723-1769,1771-1817,1819-1848,1853-1895,1900-1944,1947-2305-weka.filters.unsupervised.attribute.Remove-R3,10-12,14-17,19,21-22,24-25,28-29,31,34-35,38,40-41,43,47,50,53,56-58,60-61,64-65,69-71-weka.filters.unsupervised.instance.RemoveDuplicates
+Instances:    10592
+Attributes:   36
+              V12
+              V14
+              V15
+              V30
+              V31
+              V32
+              V60
+              V78
+              V198
+              V272
+              V553
+              V601
+              V602
+              V649
+              V697
+              V722
+              V770
+              V771
+              V819
+              V1362
+              V1364
+              V1375
+              V1376
+              V1409
+              V1410
+              V1424
+              V1457
+              V1505
+              V1514
+              V1722
+              V1849
+              V1850
+              V1896
+              V1897
+              V1898
+Ignored:
+              class
+Test mode:    Classes to clusters evaluation on training data
+
+=== Clustering model (full training set) ===
+
+MakeDensityBasedClusterer: 
+
+Wrapped clusterer: 
+kMeans
+======
+
+Number of iterations: 12
+Within cluster sum of squared errors: 16362.286046007332
+
+Initial starting points (random):
+
+Cluster 0: 186,176,194,225,211,198,164,225,139,195,219,224,214,190,164,80,78,79,78,145,158,129,131,137,138,143,132,98,136,22,188,193,162,163,165
+Cluster 1: 103,90,105,53,67,62,119,36,30,128,101,86,99,69,87,59,68,67,56,122,112,147,160,132,132,155,130,131,133,181,55,56,92,98,95
+
+Missing values globally replaced with mean/mode
+
+Final cluster centroids:
+                         Cluster#
+Attribute    Full Data          0          1
+             (10592.0)   (5391.0)   (5201.0)
+============================================
+V12           110.3807   148.8598    70.4959
+V14           115.8484   155.0271    75.2384
+V15           118.5727   157.5199    78.2027
+V30           130.8073   165.9119    94.4203
+V31           129.4603   164.3715    93.2736
+V32           127.8815   162.3936    92.1086
+V60           112.5537   151.4751    72.2105
+V78           136.3784   170.7587   100.7422
+V198          106.6136   141.3953    70.5612
+V272           145.261   174.0017   115.4705
+V553          158.8186   183.7731   132.9525
+V601          157.3271   182.0377   131.7139
+V602          157.1084   181.7505    131.566
+V649          155.2762   179.5645   130.1007
+V697          153.3306   177.2584   128.5287
+V722          115.2383   153.2204    75.8687
+V770          115.8834   153.7971    76.5847
+V771          113.7495   151.6223    74.4932
+V819          114.7529    152.036    76.1079
+V1362         154.5956   177.4732   130.8823
+V1364         148.9786   171.3001   125.8416
+V1375         149.0842   168.2102   129.2596
+V1376         150.2697   170.3244   129.4824
+V1409         153.6356   176.7362    129.691
+V1410         151.3226    174.401   127.4011
+V1424         147.2619    167.125   126.6731
+V1457          150.181   173.4144   126.0988
+V1505         146.9495   169.5435   123.5301
+V1514         139.7914   159.3563   119.5118
+V1722         123.0945   144.4678   100.9404
+V1849         123.9924   142.0657    105.259
+V1850         124.1311   142.2998   105.2988
+V1896         124.3444    142.826   105.1877
+V1897         124.7349   143.1638   105.6328
+V1898         124.9599   143.1217   106.1346
+
+
+
+Fitted estimators (with ML estimates of variance):
+
+Cluster: 0 Prior probability: 0.509
+
+Attribute: V12
+Normal Distribution. Mean = 148.8598 StdDev = 61.3016
+Attribute: V14
+Normal Distribution. Mean = 155.0271 StdDev = 57.727
+Attribute: V15
+Normal Distribution. Mean = 157.5199 StdDev = 56.6766
+Attribute: V30
+Normal Distribution. Mean = 165.9119 StdDev = 54.3416
+Attribute: V31
+Normal Distribution. Mean = 164.3715 StdDev = 54.6154
+Attribute: V32
+Normal Distribution. Mean = 162.3936 StdDev = 55.3095
+Attribute: V60
+Normal Distribution. Mean = 151.4751 StdDev = 59.3331
+Attribute: V78
+Normal Distribution. Mean = 170.7587 StdDev = 52.3002
+Attribute: V198
+Normal Distribution. Mean = 141.3953 StdDev = 70.394
+Attribute: V272
+Normal Distribution. Mean = 174.0017 StdDev = 49.0741
+Attribute: V553
+Normal Distribution. Mean = 183.7731 StdDev = 41.9997
+Attribute: V601
+Normal Distribution. Mean = 182.0377 StdDev = 41.8782
+Attribute: V602
+Normal Distribution. Mean = 181.7505 StdDev = 42.0639
+Attribute: V649
+Normal Distribution. Mean = 179.5645 StdDev = 42.4093
+Attribute: V697
+Normal Distribution. Mean = 177.2584 StdDev = 42.2756
+Attribute: V722
+Normal Distribution. Mean = 153.2204 StdDev = 71.607
+Attribute: V770
+Normal Distribution. Mean = 153.7971 StdDev = 71.5605
+Attribute: V771
+Normal Distribution. Mean = 151.6223 StdDev = 69.9239
+Attribute: V819
+Normal Distribution. Mean = 152.036 StdDev = 69.5232
+Attribute: V1362
+Normal Distribution. Mean = 177.4732 StdDev = 42.5382
+Attribute: V1364
+Normal Distribution. Mean = 171.3001 StdDev = 43.1184
+Attribute: V1375
+Normal Distribution. Mean = 168.2102 StdDev = 44.266
+Attribute: V1376
+Normal Distribution. Mean = 170.3244 StdDev = 44.2172
+Attribute: V1409
+Normal Distribution. Mean = 176.7362 StdDev = 42.3672
+Attribute: V1410
+Normal Distribution. Mean = 174.401 StdDev = 43.0447
+Attribute: V1424
+Normal Distribution. Mean = 167.125 StdDev = 45.5349
+Attribute: V1457
+Normal Distribution. Mean = 173.4144 StdDev = 43.1429
+Attribute: V1505
+Normal Distribution. Mean = 169.5435 StdDev = 44.0667
+Attribute: V1514
+Normal Distribution. Mean = 159.3563 StdDev = 48.1851
+Attribute: V1722
+Normal Distribution. Mean = 144.4678 StdDev = 61.8118
+Attribute: V1849
+Normal Distribution. Mean = 142.0657 StdDev = 54.9497
+Attribute: V1850
+Normal Distribution. Mean = 142.2998 StdDev = 54.0539
+Attribute: V1896
+Normal Distribution. Mean = 142.826 StdDev = 53.936
+Attribute: V1897
+Normal Distribution. Mean = 143.1638 StdDev = 53.5217
+Attribute: V1898
+Normal Distribution. Mean = 143.1217 StdDev = 52.945
+
+Cluster: 1 Prior probability: 0.491
+
+Attribute: V12
+Normal Distribution. Mean = 70.4959 StdDev = 50.876
+Attribute: V14
+Normal Distribution. Mean = 75.2384 StdDev = 51.3962
+Attribute: V15
+Normal Distribution. Mean = 78.2027 StdDev = 51.6112
+Attribute: V30
+Normal Distribution. Mean = 94.4203 StdDev = 57.0319
+Attribute: V31
+Normal Distribution. Mean = 93.2736 StdDev = 57.2216
+Attribute: V32
+Normal Distribution. Mean = 92.1086 StdDev = 57.321
+Attribute: V60
+Normal Distribution. Mean = 72.2105 StdDev = 50.4749
+Attribute: V78
+Normal Distribution. Mean = 100.7422 StdDev = 56.955
+Attribute: V198
+Normal Distribution. Mean = 70.5612 StdDev = 57.9632
+Attribute: V272
+Normal Distribution. Mean = 115.4705 StdDev = 56.8894
+Attribute: V553
+Normal Distribution. Mean = 132.9525 StdDev = 52.5976
+Attribute: V601
+Normal Distribution. Mean = 131.7139 StdDev = 52.0827
+Attribute: V602
+Normal Distribution. Mean = 131.566 StdDev = 52.0462
+Attribute: V649
+Normal Distribution. Mean = 130.1007 StdDev = 51.3879
+Attribute: V697
+Normal Distribution. Mean = 128.5287 StdDev = 50.922
+Attribute: V722
+Normal Distribution. Mean = 75.8687 StdDev = 63.0902
+Attribute: V770
+Normal Distribution. Mean = 76.5847 StdDev = 62.755
+Attribute: V771
+Normal Distribution. Mean = 74.4932 StdDev = 60.4386
+Attribute: V819
+Normal Distribution. Mean = 76.1079 StdDev = 61.0819
+Attribute: V1362
+Normal Distribution. Mean = 130.8823 StdDev = 49.7535
+Attribute: V1364
+Normal Distribution. Mean = 125.8416 StdDev = 49.9683
+Attribute: V1375
+Normal Distribution. Mean = 129.2596 StdDev = 50.1552
+Attribute: V1376
+Normal Distribution. Mean = 129.4824 StdDev = 50.7123
+Attribute: V1409
+Normal Distribution. Mean = 129.691 StdDev = 49.8208
+Attribute: V1410
+Normal Distribution. Mean = 127.4011 StdDev = 49.84
+Attribute: V1424
+Normal Distribution. Mean = 126.6731 StdDev = 51.0609
+Attribute: V1457
+Normal Distribution. Mean = 126.0988 StdDev = 50.1035
+Attribute: V1505
+Normal Distribution. Mean = 123.5301 StdDev = 50.2758
+Attribute: V1514
+Normal Distribution. Mean = 119.5118 StdDev = 51.1804
+Attribute: V1722
+Normal Distribution. Mean = 100.9404 StdDev = 62.0055
+Attribute: V1849
+Normal Distribution. Mean = 105.259 StdDev = 52.1832
+Attribute: V1850
+Normal Distribution. Mean = 105.2988 StdDev = 52.1829
+Attribute: V1896
+Normal Distribution. Mean = 105.1877 StdDev = 51.7876
+Attribute: V1897
+Normal Distribution. Mean = 105.6328 StdDev = 51.639
+Attribute: V1898
+Normal Distribution. Mean = 106.1346 StdDev = 51.5243
+
+
+Time taken to build model (full training data) : 0.17 seconds
+
+=== Model and evaluation on training set ===
+
+Clustered Instances
+
+0       5474 ( 52%)
+1       5118 ( 48%)
+
+
+Log likelihood: -188.82742
+
+
+Class attribute: class
+Classes to Clusters:
+
+    0    1  <-- assigned to cluster
+  733  701 | 0
+  101   63 | 1
+  882  649 | 2
+ 1378 1296 | 3
+  737 1069 | 4
+  790  340 | 5
+  853 1000 | 6
+
+Cluster 0 <-- 3
+Cluster 1 <-- 4
+
+Incorrectly clustered instances :	8145.0	 76.8977 %
+
